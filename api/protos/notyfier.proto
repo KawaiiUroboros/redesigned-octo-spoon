@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package achirikova.emergence;
+
+option go_package = "emergence/api;api_pb";
+
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service NotyfierService {
+  rpc ListNotyfiers (ListNotyfiersRequest) returns (ListNotyfiersResponse) {
+    option (google.api.http) = {
+      get: "/notyfiers"
+    };
+  }
+  rpc GetNotyfier (GetNotyfierRequest) returns (Notyfier) {
+    option (google.api.http) = {
+      get: "/notyfiers/{notyfier_id}"
+    };
+  }
+  rpc CreateNotyfier (CreateNotyfierRequest) returns (Notyfier) {
+    option (google.api.http) = {
+      post: "/notyfiers"
+      body: "notyfier"
+    };
+  }
+  rpc UpdateNotyfier (UpdateNotyfierRequest) returns (Notyfier) {
+    option (google.api.http) = {
+      patch: "/notyfiers/{notyfier.notyfier_id}"
+      body: "notyfier"
+    };
+  }
+  rpc DeleteNotyfier (DeleteNotyfierRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/notyfiers/{notyfier_id}"
+    };
+  }
+}
+
+message Notyfier {
+  string notyfier_id = 1;
+}
+
+message ListNotyfiersRequest {
+}
+
+message ListNotyfiersResponse {
+  repeated Notyfier notyfiers = 1;
+}
+
+message GetNotyfierRequest {
+  string notyfier_id = 1;
+}
+
+message CreateNotyfierRequest {
+  Notyfier notyfier = 1;
+}
+
+message UpdateNotyfierRequest {
+  Notyfier notyfier = 1;
+}
+
+message DeleteNotyfierRequest {
+  string notyfier_id = 1;
+}
