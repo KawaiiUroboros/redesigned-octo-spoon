@@ -11,34 +11,14 @@
     "application/json"
   ],
   "paths": {
-    "/notyfiers": {
-      "get": {
-        "operationId": "NotyfierService_ListNotyfiers",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/emergenceListNotyfiersResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "tags": [
-          "NotyfierService"
-        ]
-      },
+    "/CreateChats": {
       "post": {
-        "operationId": "NotyfierService_CreateNotyfier",
+        "operationId": "NotyfierService_CreateChats",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/emergenceNotyfier"
+              "$ref": "#/definitions/emergenceCreateChatsResponse"
             }
           },
           "default": {
@@ -54,7 +34,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/emergenceNotyfier"
+              "$ref": "#/definitions/emergenceCreateChatsRequest"
             }
           }
         ],
@@ -63,14 +43,15 @@
         ]
       }
     },
-    "/notyfiers/{notyfier.notyfier_id}": {
-      "patch": {
-        "operationId": "NotyfierService_UpdateNotyfier",
+    "/DeleteChats": {
+      "post": {
+        "summary": "RPC for deleting a chats by external user ids",
+        "operationId": "NotyfierService_DeleteChats",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/emergenceNotyfier"
+              "$ref": "#/definitions/emergenceDeleteChatsResponse"
             }
           },
           "default": {
@@ -81,77 +62,13 @@
           }
         },
         "parameters": [
-          {
-            "name": "notyfier.notyfier_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/emergenceNotyfier"
+              "$ref": "#/definitions/emergenceDeleteChatsRequest"
             }
-          }
-        ],
-        "tags": [
-          "NotyfierService"
-        ]
-      }
-    },
-    "/notyfiers/{notyfier_id}": {
-      "get": {
-        "operationId": "NotyfierService_GetNotyfier",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/emergenceNotyfier"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "notyfier_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "NotyfierService"
-        ]
-      },
-      "delete": {
-        "operationId": "NotyfierService_DeleteNotyfier",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "notyfier_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "tags": [
@@ -161,24 +78,53 @@
     }
   },
   "definitions": {
-    "emergenceListNotyfiersResponse": {
+    "emergenceCreateChatsRequest": {
       "type": "object",
       "properties": {
-        "notyfiers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/emergenceNotyfier"
+        "ExternalUserIdToInterval": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "title": "CreateChats"
+    },
+    "emergenceCreateChatsResponse": {
+      "type": "object",
+      "properties": {
+        "ExternalUserIdToChatUrl": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
           }
         }
       }
     },
-    "emergenceNotyfier": {
+    "emergenceDeleteChatsRequest": {
       "type": "object",
       "properties": {
-        "notyfier_id": {
-          "type": "string"
+        "user_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
-      }
+      },
+      "title": "DeleteChatsRequest is a request to delete chats"
+    },
+    "emergenceDeleteChatsResponse": {
+      "type": "object",
+      "properties": {
+        "deleted_chats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "DeleteChatsResponse is a response to delete chats"
     },
     "protobufAny": {
       "type": "object",

@@ -33,232 +33,70 @@ var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 var _ = metadata.Join
 
-func request_NotyfierService_ListNotyfiers_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotyfiersRequest
-	var metadata runtime.ServerMetadata
-
-	msg, err := client.ListNotyfiers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_NotyfierService_ListNotyfiers_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotyfiersRequest
-	var metadata runtime.ServerMetadata
-
-	msg, err := server.ListNotyfiers(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_NotyfierService_GetNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetNotyfierRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier_id")
-	}
-
-	protoReq.NotyfierId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier_id", err)
-	}
-
-	msg, err := client.GetNotyfier(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_NotyfierService_GetNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetNotyfierRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier_id")
-	}
-
-	protoReq.NotyfierId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier_id", err)
-	}
-
-	msg, err := server.GetNotyfier(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_NotyfierService_CreateNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateNotyfierRequest
+func request_NotyfierService_CreateChats_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateChatsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Notyfier); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreateNotyfier(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateChats(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_NotyfierService_CreateNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateNotyfierRequest
+func local_request_NotyfierService_CreateChats_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateChatsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Notyfier); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.CreateNotyfier(ctx, &protoReq)
+	msg, err := server.CreateChats(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_NotyfierService_UpdateNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateNotyfierRequest
+func request_NotyfierService_DeleteChats_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DeleteChatsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Notyfier); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier.notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier.notyfier_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "notyfier.notyfier_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier.notyfier_id", err)
-	}
-
-	msg, err := client.UpdateNotyfier(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteChats(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_NotyfierService_UpdateNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateNotyfierRequest
+func local_request_NotyfierService_DeleteChats_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DeleteChatsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Notyfier); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier.notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier.notyfier_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "notyfier.notyfier_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier.notyfier_id", err)
-	}
-
-	msg, err := server.UpdateNotyfier(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_NotyfierService_DeleteNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, client NotyfierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DeleteNotyfierRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier_id")
-	}
-
-	protoReq.NotyfierId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier_id", err)
-	}
-
-	msg, err := client.DeleteNotyfier(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_NotyfierService_DeleteNotyfier_0(ctx context.Context, marshaler runtime.Marshaler, server NotyfierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DeleteNotyfierRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["notyfier_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notyfier_id")
-	}
-
-	protoReq.NotyfierId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notyfier_id", err)
-	}
-
-	msg, err := server.DeleteNotyfier(ctx, &protoReq)
+	msg, err := server.DeleteChats(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -269,7 +107,7 @@ func local_request_NotyfierService_DeleteNotyfier_0(ctx context.Context, marshal
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterNotyfierServiceHandlerFromEndpoint instead.
 func RegisterNotyfierServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server NotyfierServiceServer) error {
 
-	mux.Handle("GET", pattern_NotyfierService_ListNotyfiers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotyfierService_CreateChats_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -280,7 +118,7 @@ func RegisterNotyfierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_NotyfierService_ListNotyfiers_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_NotyfierService_CreateChats_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -288,11 +126,11 @@ func RegisterNotyfierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_NotyfierService_ListNotyfiers_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotyfierService_CreateChats_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_NotyfierService_GetNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotyfierService_DeleteChats_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -303,7 +141,7 @@ func RegisterNotyfierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_NotyfierService_GetNotyfier_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_NotyfierService_DeleteChats_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -311,76 +149,7 @@ func RegisterNotyfierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_NotyfierService_GetNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_NotyfierService_CreateNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_NotyfierService_CreateNotyfier_0(rctx, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_CreateNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PATCH", pattern_NotyfierService_UpdateNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_NotyfierService_UpdateNotyfier_0(rctx, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_UpdateNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("DELETE", pattern_NotyfierService_DeleteNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_NotyfierService_DeleteNotyfier_0(rctx, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_DeleteNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotyfierService_DeleteChats_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -425,7 +194,7 @@ func RegisterNotyfierServiceHandler(ctx context.Context, mux *runtime.ServeMux, 
 // "NotyfierServiceClient" to call the correct interceptors.
 func RegisterNotyfierServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client NotyfierServiceClient) error {
 
-	mux.Handle("GET", pattern_NotyfierService_ListNotyfiers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotyfierService_CreateChats_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -434,18 +203,18 @@ func RegisterNotyfierServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_NotyfierService_ListNotyfiers_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NotyfierService_CreateChats_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotyfierService_ListNotyfiers_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotyfierService_CreateChats_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_NotyfierService_GetNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotyfierService_DeleteChats_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -454,74 +223,14 @@ func RegisterNotyfierServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_NotyfierService_GetNotyfier_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NotyfierService_DeleteChats_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotyfierService_GetNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_NotyfierService_CreateNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_NotyfierService_CreateNotyfier_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_CreateNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PATCH", pattern_NotyfierService_UpdateNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_NotyfierService_UpdateNotyfier_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_UpdateNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("DELETE", pattern_NotyfierService_DeleteNotyfier_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_NotyfierService_DeleteNotyfier_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_NotyfierService_DeleteNotyfier_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotyfierService_DeleteChats_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -529,25 +238,13 @@ func RegisterNotyfierServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_NotyfierService_ListNotyfiers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"notyfiers"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NotyfierService_CreateChats_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"CreateChats"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_NotyfierService_GetNotyfier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"notyfiers", "notyfier_id"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_NotyfierService_CreateNotyfier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"notyfiers"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_NotyfierService_UpdateNotyfier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"notyfiers", "notyfier.notyfier_id"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_NotyfierService_DeleteNotyfier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"notyfiers", "notyfier_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NotyfierService_DeleteChats_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"DeleteChats"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_NotyfierService_ListNotyfiers_0 = runtime.ForwardResponseMessage
+	forward_NotyfierService_CreateChats_0 = runtime.ForwardResponseMessage
 
-	forward_NotyfierService_GetNotyfier_0 = runtime.ForwardResponseMessage
-
-	forward_NotyfierService_CreateNotyfier_0 = runtime.ForwardResponseMessage
-
-	forward_NotyfierService_UpdateNotyfier_0 = runtime.ForwardResponseMessage
-
-	forward_NotyfierService_DeleteNotyfier_0 = runtime.ForwardResponseMessage
+	forward_NotyfierService_DeleteChats_0 = runtime.ForwardResponseMessage
 )

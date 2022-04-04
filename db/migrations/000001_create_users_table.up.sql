@@ -1,12 +1,14 @@
 BEGIN;
-CREATE TABLE IF NOT EXISTS users(
-    user_id serial primary key,
-    user_name varchar (50) not null,
-    user_surname varchar (50) not null,
-    address varchar (300) not null,
-    is_deleted boolean not null,
-    end_date timestamp with time zone,
-    notification_interval integer,
-    last_confirmation timestamp with time zone
-    );
+create table users
+(
+    id                    serial primary key,
+    external_user_id      varchar(255) not null,
+    begin_date            timestamp not null,
+    channel_id            varchar(60) not null,
+    notification_interval integer not null ,
+    last_confirmation     timestamp,
+    is_deleted            boolean not null
+);
+--add unique constraint on channel_id
+ALTER TABLE users ADD CONSTRAINT users_channel_id_key UNIQUE (channel_id);
 COMMIT;

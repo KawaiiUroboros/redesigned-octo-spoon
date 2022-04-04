@@ -9,58 +9,39 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 service NotyfierService {
-  rpc ListNotyfiers (ListNotyfiersRequest) returns (ListNotyfiersResponse) {
+  rpc CreateChats (CreateChatsRequest) returns (CreateChatsResponse) {
     option (google.api.http) = {
-      get: "/notyfiers"
+      post: "/CreateChats"
+      body: "*"
     };
   }
-  rpc GetNotyfier (GetNotyfierRequest) returns (Notyfier) {
+  // RPC for deleting a chats by external user ids
+  rpc DeleteChats (DeleteChatsRequest) returns (DeleteChatsResponse) {
     option (google.api.http) = {
-      get: "/notyfiers/{notyfier_id}"
+      post: "/DeleteChats"
+      body: "*"
     };
   }
-  rpc CreateNotyfier (CreateNotyfierRequest) returns (Notyfier) {
-    option (google.api.http) = {
-      post: "/notyfiers"
-      body: "notyfier"
-    };
-  }
-  rpc UpdateNotyfier (UpdateNotyfierRequest) returns (Notyfier) {
-    option (google.api.http) = {
-      patch: "/notyfiers/{notyfier.notyfier_id}"
-      body: "notyfier"
-    };
-  }
-  rpc DeleteNotyfier (DeleteNotyfierRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/notyfiers/{notyfier_id}"
-    };
-  }
+
+}
+//DeleteChatsRequest is a request to delete chats
+message DeleteChatsRequest {
+  repeated string user_ids = 1;
+}
+//DeleteChatsResponse is a response to delete chats
+message DeleteChatsResponse {
+  repeated string deleted_chats = 1;
+}
+//CreateChats
+message CreateChatsRequest {
+  map<string, int32> ExternalUserIdToInterval = 1;
 }
 
-message Notyfier {
-  string notyfier_id = 1;
+message CreateChatsResponse {
+  map<string, string> ExternalUserIdToChatUrl = 1;
 }
+message UserInfoDto {
+  string ExternalUserId = 1;
+  string Address = 2;
 
-message ListNotyfiersRequest {
-}
-
-message ListNotyfiersResponse {
-  repeated Notyfier notyfiers = 1;
-}
-
-message GetNotyfierRequest {
-  string notyfier_id = 1;
-}
-
-message CreateNotyfierRequest {
-  Notyfier notyfier = 1;
-}
-
-message UpdateNotyfierRequest {
-  Notyfier notyfier = 1;
-}
-
-message DeleteNotyfierRequest {
-  string notyfier_id = 1;
 }
