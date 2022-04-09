@@ -56,9 +56,11 @@ func run() error {
 			server.NewNotyfierServiceServer(repo),
 		),
 	)
+
 	//create a background task to send notifications to chats that have exceeded the interval evry minute
 	go func() {
 		for {
+			log.Println("Sending notifications to chats")
 			err := repo.NotifyChats()
 			if err != nil {
 				log.Println(err)

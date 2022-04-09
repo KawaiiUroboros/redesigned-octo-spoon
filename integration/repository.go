@@ -5,6 +5,7 @@ import (
 	"emergence/integration/clients"
 	repoModels "emergence/integration/models"
 	"github.com/ahmetb/go-linq/v3"
+	"log"
 )
 
 //IRepository interface for creating Slack channels and storing them in the database
@@ -80,6 +81,10 @@ func (r *Repository) DeleteChats(externalUserIds *[]string) (deletedChatIds *[]s
 func (r *Repository) NotifyChats() (err error) {
 	var activeChannels []repoModels.ActiveChannel
 	err = r.db.GetActiveChannels(&activeChannels)
+	//if activeChannels is empty, log the error
+	if len(activeChannels) == 0 {
+		log.Println("No active channels found")
+	}
 	if err != nil {
 		return err
 	}
@@ -88,6 +93,12 @@ func (r *Repository) NotifyChats() (err error) {
 		return activeChannel.ChannelId
 	}).ToSlice(&channelIds)
 	err = r.sl.NotifyChannels(&channelIds)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	//for active channel, update the last_confirmation field
+	err = r.db.UpdateBeginDateForActiveChannels(&activeChannels)
 	if err != nil {
 		return err
 	}

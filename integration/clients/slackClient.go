@@ -20,7 +20,7 @@ type ISlackClient interface {
 func NewSlackClient() *SlackClient {
 	return &SlackClient{
 		client: slack.New(
-			"xoxb-3098103420019-3278674908690-ZB2bINP9OVwsDhorhSAZ8RTF",
+			"xoxb-3098103420019-3278674908690-Jm5l2HujsRUvoN1qpiA9lIDN",
 			slack.OptionDebug(true)),
 	}
 }
@@ -55,7 +55,10 @@ func (s *SlackClient) CreateChannels(channelNames *[]string) (userIdToChannelId 
 			return nil, err
 		}
 		//add user to a channel
-		_, err = s.client.InviteUsersToConversation(channel.ID, userIdAsChannelName, "U0386KUSQLA")
+		_, err = s.client.InviteUsersToConversation(channel.ID, userIdAsChannelName)
+		if err != nil {
+			return nil, err
+		}
 		(*userIdToChannelId)[userIdAsChannelName] = channel.ID
 	}
 	return userIdToChannelId, nil
@@ -75,7 +78,29 @@ func (s *SlackClient) DeleteChannels(channelIds *[]string) error {
 // NotifyChannels Send message to channel
 func (s *SlackClient) NotifyChannels(channelIds *[]string) error {
 	for _, channelId := range *channelIds {
-		_, _, err := s.client.PostMessage(channelId, slack.MsgOptionText("Hello from Go!", false))
+		// send a message with an interactive button
+		_, _, err := s.client.PostMessage(channelId, slack.MsgOptionAttachments(
+			slack.Attachment{
+				Title: "Ежедневное уведомление",
+				Fields: []slack.AttachmentField{
+					slack.AttachmentField{
+						Title: "спасибо что живой",
+						Value: "правда спасибо",
+						Short: false,
+					},
+				},
+				Actions: []slack.AttachmentAction{
+					slack.AttachmentAction{
+						Name: "action",
+						Text: "Пожалуйста!",
+						Type: "button",
+						// url with userId as query parameter
+						URL: "localhost:3000/GetNotification/" + channelId,
+					},
+				},
+			},
+		))
+
 		if err != nil {
 			return err
 		}

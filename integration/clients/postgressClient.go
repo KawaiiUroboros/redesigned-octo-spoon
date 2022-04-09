@@ -18,6 +18,8 @@ type IPostgresClient interface {
 	DeleteActiveChannelsByExternalUserIds(externalUserIds *[]string) error
 	// GetActiveChannels GetAllActiveChannels() ([]models.ActiveChannel, error)
 	GetActiveChannels(activeChannels *[]models.ActiveChannel) error
+	// UpdateBeginDateForActiveChannels for active channel, update the last_confirmation field
+	UpdateBeginDateForActiveChannels(channels *[]models.ActiveChannel) error
 }
 
 //PostgresClient is a client for Postgres implementation of IPostgresClient
@@ -155,11 +157,11 @@ func (p *PostgresClient) DeleteActiveChannelsByExternalUserIds(externalUserIds *
 	return nil
 }
 
-// GetActiveChannels channels where the notification interval In minutes exceeds last confirmation timestamp and the channel is not deleted
+// GetActiveChannels channels where the notification interval In minutes exceeds begin_date timestamp and the channel is not deleted
 func (p *PostgresClient) GetActiveChannels(activeChannels *[]models.ActiveChannel) error {
 	//cast ten minutes to interval in postgres
 
-	rows, err := p.db.Query("SELECT channel_id, notification_interval, last_confirmation FROM users WHERE is_deleted=false AND make_interval(0,0,0,0,0,notification_interval)  > (now() - last_confirmation)")
+	rows, err := p.db.Query("SELECT channel_id, notification_interval, begin_date FROM users WHERE is_deleted=false AND make_interval(0,0,0,0,0,notification_interval) < (now() - begin_date)")
 	if err != nil {
 		log.Println("Error while querying for active channels")
 		return err
@@ -186,5 +188,38 @@ func (p *PostgresClient) GetActiveChannels(activeChannels *[]models.ActiveChanne
 				ChannelId: channelId,
 				Interval:  interval})
 	}
+	return nil
+}
+
+//UpdateBeginDateForActiveChannels updates the begin_date timestamp for all active channels
+func (p *PostgresClient) UpdateBeginDateForActiveChannels(activeChannels *[]models.ActiveChannel) error {
+	tx, err := p.db.Begin()
+	if err != nil {
+		log.Println("Error while starting transaction")
+		return err
+	}
+	//rollback if error
+	defer func() {
+		if r := recover(); r != nil {
+			err := tx.Rollback()
+			if err != nil {
+				return
+			}
+		}
+	}()
+	for _, activeChannel := range *activeChannels {
+		_, err = tx.Exec("UPDATE users SET begin_date=now() WHERE channel_id=$1", activeChannel.ChannelId)
+		if err != nil {
+			log.Println("Error while updating last confirmation for active channels")
+			return err
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Println("Error while committing transaction")
+		return err
+	}
+
 	return nil
 }

@@ -22,7 +22,21 @@ service NotyfierService {
       body: "*"
     };
   }
+  // get rpc for getting a chats by user ids
+  rpc GetNotification (GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {
+      get: "/GetNotification/{userid}"
+    };
+  }
 
+}
+//GetNotificationRequest is a request for getting a chats by user ids
+message GetNotificationRequest {
+  string userid = 1;
+}
+//GetNotificationResponse is a response for getting a chats by user ids
+message GetNotificationResponse {
+  string answer = 1;
 }
 //DeleteChatsRequest is a request to delete chats
 message DeleteChatsRequest {

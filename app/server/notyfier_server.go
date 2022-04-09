@@ -29,6 +29,11 @@ type notyfierServiceServerImpl struct {
 	repo     integration.IRepository
 }
 
+func (s *notyfierServiceServerImpl) GetNotification(ctx context.Context, request *api_pb.GetNotificationRequest) (*api_pb.GetNotificationResponse, error) {
+	//TODO implement me
+	return &api_pb.GetNotificationResponse{Answer: "Ok"}, nil
+}
+
 func (s *notyfierServiceServerImpl) DeleteChats(ctx context.Context, request *api_pb.DeleteChatsRequest) (*api_pb.DeleteChatsResponse, error) {
 	result, err := s.mediator.Send(&deleteChatsMediator.DeleteChatsCommand{
 		ExternalUserIds: &request.UserIds,
