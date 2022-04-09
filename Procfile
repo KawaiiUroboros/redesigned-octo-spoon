@@ -1,1 +1,1 @@
-web: grapi server
+web: ./grapi build
