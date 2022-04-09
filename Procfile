@@ -1,1 +1,1 @@
-web: ./grapi build
+web: go build emergence/cmd/server
