@@ -10,6 +10,7 @@ import (
 	panicHandler "github.com/kazegusuri/grpc-panic-handler"
 	"github.com/srvc/appctx"
 	"log"
+	os "os"
 	"time"
 )
 
@@ -48,8 +49,13 @@ func run() error {
 			}
 		})
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "9000"
+	}
+
 	s := grapiserver.New(
-		grapiserver.WithGrpcAddr("tcp", ":9000"),
+		grapiserver.WithGrpcAddr("tcp", ":"+port),
 		grapiserver.WithDefaultLogger(),
 		grapiserver.WithGrpcServerUnaryInterceptors(panicHandler.UnaryPanicHandler),
 		grapiserver.WithServers(
