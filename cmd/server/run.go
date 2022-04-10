@@ -55,7 +55,7 @@ func run() error {
 	}
 
 	s := grapiserver.New(
-		grapiserver.WithGrpcAddr("tcp", ":"+port),
+		grapiserver.WithGatewayAddr("tcp", ":"+port),
 		grapiserver.WithDefaultLogger(),
 		grapiserver.WithGrpcServerUnaryInterceptors(panicHandler.UnaryPanicHandler),
 		grapiserver.WithServers(
