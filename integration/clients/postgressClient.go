@@ -3,6 +3,9 @@ package clients
 import (
 	"database/sql"
 	"emergence/integration/models"
+	// we have to import the driver, but don't use it in our code
+	// so we use the `_` symbol
+	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/pkg/errors"
 	"log"
 	"time"
@@ -79,7 +82,7 @@ func (p *PostgresClient) AddSlackChannelForUserToDb(activeChannels *[]models.Act
 // NewPostgresClient returns a new PostgresClient with the given connection string
 func NewPostgresClient() *PostgresClient {
 	connectionString := "postgres://uhjxadtqnmvedz:827b87d9c520ea5e6c07d04522a1efa923be6740fe2332174bc7511532e52e0a@ec2-63-35-156-160.eu-west-1.compute.amazonaws.com:5432/d5qq14sdoip2f"
-	db, err := sql.Open("postgres", connectionString)
+	db, err := sql.Open("pgx", connectionString)
 	if err != nil {
 		log.Fatal(err)
 	}

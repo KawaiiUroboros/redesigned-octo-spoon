@@ -11,6 +11,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/izumin5210/gex v0.5.1
 	github.com/izumin5210/grapi v0.5.0
+	github.com/jackc/pgx/v4 v4.10.1
 	github.com/kazegusuri/grpc-panic-handler v0.0.0-20160502122501-093ec776affc
 	github.com/pkg/errors v0.9.1
 	github.com/slack-go/slack v0.10.2
@@ -32,6 +33,13 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/izumin5210/clig v0.3.1 // indirect
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgconn v1.8.0 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.0.7 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/jackc/pgtype v1.6.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/lib/pq v1.10.0 // indirect
 	github.com/magiconair/properties v1.8.0 // indirect
@@ -58,6 +66,7 @@ require (
 	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20220304170021-431ea809a767 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/utils v0.0.0-20201110183641-67b214c5f920 // indirect
