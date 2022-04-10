@@ -78,7 +78,7 @@ func (p *PostgresClient) AddSlackChannelForUserToDb(activeChannels *[]models.Act
 
 // NewPostgresClient returns a new PostgresClient with the given connection string
 func NewPostgresClient() *PostgresClient {
-	connectionString := "postgres://xblpqldtkjrpel:76e877a9b94725f547c1f3e5955c6c14461d1bd231ee88872e19473f74d1401f@ec2-44-194-92-192.compute-1.amazonaws.com:5432/d3q3rao0sk6vgl"
+	connectionString := "postgres://uhjxadtqnmvedz:827b87d9c520ea5e6c07d04522a1efa923be6740fe2332174bc7511532e52e0a@ec2-63-35-156-160.eu-west-1.compute.amazonaws.com:5432/d5qq14sdoip2f"
 	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
 		log.Fatal(err)
