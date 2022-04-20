@@ -20,7 +20,7 @@ type ISlackClient interface {
 func NewSlackClient() *SlackClient {
 	return &SlackClient{
 		client: slack.New(
-			"xoxb-3098103420019-3278674908690-Jm5l2HujsRUvoN1qpiA9lIDN",
+			"key",
 			slack.OptionDebug(true)),
 	}
 }
