@@ -19,6 +19,7 @@ type IPostgresClient interface {
 	GetActiveChannelsByExternalUserIds(externalUserIds *[]string, i *[]models.ActiveChannel) error
 	//DeleteActiveChannelsByExternalUserIds DeleteActiveChannelByExternalUserIds(externalUserIds *[]string) error
 	DeleteActiveChannelsByExternalUserIds(externalUserIds *[]string) error
+	GetPenaltiesUserIds(userIds *[]string) error
 	// GetActiveChannels GetAllActiveChannels() ([]models.ActiveChannel, error)
 	GetActiveChannels(activeChannels *[]models.ActiveChannel) error
 	// UpdateBeginDateForActiveChannels for active channel, update the last_confirmation field
@@ -224,5 +225,33 @@ func (p *PostgresClient) UpdateBeginDateForActiveChannels(activeChannels *[]mode
 		return err
 	}
 
+	return nil
+}
+
+// GetPenaltiesChannels returns all channels where the notification interval In minutes exceeds begin_date timestamp and the channel is not deleted
+func (p *PostgresClient) GetPenaltiesUserIds(userIds *[]string) error {
+	rows, err := p.db.Query("SELECT external_user_id FROM users WHERE is_deleted=false AND make_interval(0,0,0,0,0,120) < (begin_date - last_confirmation)")
+	if err != nil {
+		log.Println("Error while querying for penalties userIds")
+		return err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			log.Println("Error while closing rows")
+		}
+	}(rows)
+
+	for rows.Next() {
+		var userId string
+		err = rows.Scan(&userId)
+		if err != nil {
+			log.Println("Error while scanning for penalties userIds")
+			return err
+		}
+		*userIds = append(
+			*userIds,
+			userId)
+	}
 	return nil
 }

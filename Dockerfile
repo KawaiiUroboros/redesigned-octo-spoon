@@ -1,6 +1,7 @@
 FROM golang:1.17
 EXPOSE 9000
-EXPOSE 3000
+//expose wild card port
+
 WORKDIR /app
 COPY . .
 RUN go get ./...

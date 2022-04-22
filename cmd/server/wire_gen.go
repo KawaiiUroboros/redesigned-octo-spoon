@@ -17,6 +17,7 @@ import (
 func InitializeDependency() (integration.IRepository, error) {
 	postgresClient := clients.NewPostgresClient()
 	slackClient := clients.NewSlackClient()
-	repository := integration.NewRepository(postgresClient, slackClient)
+	hospitalClient := clients.NewHospitalClient()
+	repository := integration.NewRepository(postgresClient, slackClient, hospitalClient)
 	return repository, nil
 }

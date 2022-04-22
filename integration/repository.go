@@ -14,17 +14,19 @@ type IRepository interface {
 	DeleteChats(externalUserIds *[]string) (deletedChatIds *[]string, err error)
 	// NotifyChats sending notifications to chats that have exceeded the interval
 	NotifyChats() (err error)
+	CreateIncidents() error
 }
 
 // Repository implementation of the IRepository interface for the database and Slack
 type Repository struct {
 	db clients.IPostgresClient
 	sl clients.ISlackClient
+	hc clients.IHospitalClient
 }
 
 //NewRepository creates a new Repository
-func NewRepository(db clients.IPostgresClient, sl clients.ISlackClient) *Repository {
-	return &Repository{db: db, sl: sl}
+func NewRepository(db clients.IPostgresClient, sl clients.ISlackClient, hc clients.IHospitalClient) *Repository {
+	return &Repository{db: db, sl: sl, hc: hc}
 }
 
 // CreateChannelsByUserIdsAndIntervals creates a channels for the users with the given userIDs and store the channelIds in the database with the given intervals and user ids
@@ -99,6 +101,26 @@ func (r *Repository) NotifyChats() (err error) {
 	}
 	//for active channel, update the last_confirmation field
 	err = r.db.UpdateBeginDateForActiveChannels(&activeChannels)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// CreateIncidents creates incidents in hospital client for the user Ids that have passed 2 hours from the last confirmation
+func (r *Repository) CreateIncidents() error {
+	var penaltiesUserIds []string
+	err := r.db.GetPenaltiesUserIds(&penaltiesUserIds)
+	if err != nil {
+		return err
+	}
+	//for every user id, create an incident in the hospital client
+	for _, userId := range penaltiesUserIds {
+		err = r.hc.CreateIncident(userId, "incident")
+		if err != nil {
+			return err
+		}
+	}
 	if err != nil {
 		return err
 	}

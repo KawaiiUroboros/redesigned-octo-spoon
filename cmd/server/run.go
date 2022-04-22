@@ -51,10 +51,11 @@ func run() error {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "9000"
+		port = "3001"
 	}
 
 	s := grapiserver.New(
+		grapiserver.WithGrpcAddr("tcp", ":9001"),
 		grapiserver.WithGatewayAddr("tcp", ":"+port),
 		grapiserver.WithDefaultLogger(),
 		grapiserver.WithGrpcServerUnaryInterceptors(panicHandler.UnaryPanicHandler),
@@ -66,6 +67,13 @@ func run() error {
 	//create a background task to send notifications to chats that have exceeded the interval evry minute
 	go func() {
 		for {
+			//create incidents for users that have passed 2 hours from last confirmations
+			log.Println("Creating incidents for users")
+			err = repo.CreateIncidents()
+			if err != nil {
+				log.Println(err)
+				return
+			}
 			log.Println("Sending notifications to chats")
 			err := repo.NotifyChats()
 			if err != nil {
